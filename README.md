@@ -1,12 +1,14 @@
 # demo3boxes
 
-De tao 3 may ao, go lenh:
-
+#Create VM
 vagrant up
 
-De chay playbook, go lenh nhu sau:
+vagrant ssh ci
 
 cd ansible-playbook/
 
-ansible-playbook playbook.yml
+#Install roles
+ansible-galaxy --ignore-errors install -p roles -r requirements.yml
 
+#run provision
+ansible-playbook -i hosts playbook.yml --user=vagrant --become

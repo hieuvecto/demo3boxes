@@ -30,9 +30,24 @@
   become: yes
   become_method: sudo
   vars:
-    mysql_bind_address: '192.168.33.22'
     mysql_root_username: root
     mysql_root_password: root
     mysql_root_password_update: yes
   roles:
     - mysql
+  tasks:
+    - name: install extend package
+      yum:
+        name: 
+          - vim
+        state: latest
+    - name: Retrieve stuff from mysql
+      command: >
+        sudo mysql -u root --execute="GRANT ALL PRIVILEGES ON *.* TO vagrant@'%' IDENTIFIED BY 'vagrant';"
+      register: stuff
+      check_mode: no
+      changed_when: False
+
+    - name: Do something with stuff
+      debug: "{{ item }}"
+      with_items: stuff.stdout_lines
