@@ -1,0 +1,25 @@
+<?php
+$servername = "{{ db_host }}";
+$username = "root";
+$password = "root";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password);
+
+// Check connection
+$msg = "Connected successfully";
+
+if ($conn->connect_error) {
+    $msg = "Connection failed: " . $conn->connect_error;
+} 
+
+?>
+
+<html>
+ <head>
+ </head>
+ <body>
+ <h1>PHP connect to MySQL</h1>
+ <p><?= $msg ?></p>
+</body>
+</html>

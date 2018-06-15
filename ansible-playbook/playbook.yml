@@ -1,0 +1,38 @@
+---
+- hosts: web
+  remote_user: vagrant
+  become: yes
+  become_method: sudo
+  vars:
+    php_fpm_pool_user: 'nginx'
+    php_fpm_pool_group: 'nginx'
+    php_webserver_daemon: 'nginx'
+    php_enable_php_fpm: true
+    db_host: '192.168.33.22'
+  roles: 
+    - nginx
+    - repo-remi
+    - php
+  tasks:
+    - name: Copy php test mysql script
+      template: 
+        src: ./templates/index.j2
+        dest: /usr/share/nginx/html/index.php
+    - name: install extend package
+      yum:
+        name: 
+          - php-mysqli
+          - vim
+        state: latest
+
+- hosts: db
+  remote_user: vagrant
+  become: yes
+  become_method: sudo
+  vars:
+    mysql_bind_address: '192.168.33.22'
+    mysql_root_username: root
+    mysql_root_password: root
+    mysql_root_password_update: yes
+  roles:
+    - mysql

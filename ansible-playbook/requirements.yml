@@ -1,0 +1,15 @@
+---
+- src: geerlingguy.nginx
+  name: nginx
+
+- src: geerlingguy.php
+  name: php
+
+- src: geerlingguy.php-versions
+  name: php-versions
+
+- src: geerlingguy.repo-remi
+  name: repo-remi
+  
+- src: geerlingguy.mysql
+  name: mysql
